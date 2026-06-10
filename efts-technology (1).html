@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EFTS Technology - Soluções Tecnológicas</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue: #1A3FD8;
+      --blue-light: #3B5BF5;
+      --blue-bg: #DDE5FF;
+    }
+    [data-theme="light"] {
+      --dark: #111827; --gray: #6B7280; --light-bg: #F3F4F6;
+      --white: #ffffff; --border: #E5E7EB; --nav-bg: rgba(255,255,255,0.95);
+      --card-bg: #ffffff; --footer-bg: #111827; --footer-color: rgba(255,255,255,0.6);
+      --input-bg: #ffffff; --section-title-color: #111827;
+    }
+    [data-theme="dark"] {
+      --dark: #F9FAFB; --gray: #9CA3AF; --light-bg: #1F2937;
+      --white: #111827; --border: #374151; --nav-bg: rgba(17,24,39,0.95);
+      --card-bg: #1F2937; --footer-bg: #030712; --footer-color: rgba(255,255,255,0.4);
+      --input-bg: #1F2937; --section-title-color: #F9FAFB;
+      --blue-bg: rgba(26,63,216,0.2);
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; color: var(--dark); background: var(--white); transition: background 0.3s, color 0.3s; }
+
+    /* ── NAVBAR ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px; height: 72px;
+      background: var(--nav-bg); backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .logo-icon {
+      width: 40px; height: 40px; background: var(--blue); border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      color: white; font-weight: 800; font-size: 18px; position: relative;
+    }
+    .logo-icon::after {
+      content: ''; position: absolute; top: -4px; right: -4px;
+      width: 10px; height: 10px; background: var(--blue-light);
+      border-radius: 50%; border: 2px solid var(--white);
+    }
+    .logo-text { display: flex; flex-direction: column; }
+    .logo-title { font-weight: 800; font-size: 16px; color: var(--dark); letter-spacing: 0.5px; transition: color 0.3s; }
+    .logo-sub { font-size: 11px; color: var(--gray); }
+    .nav-links { display: flex; align-items: center; gap: 8px; }
+    .nav-links a {
+      text-decoration: none; color: var(--dark); font-size: 14px; font-weight: 500;
+      padding: 8px 16px; border-radius: 6px; transition: color 0.2s; position: relative;
+    }
+    .nav-links a.active { color: var(--blue); }
+    .nav-links a.active::after {
+      content: ''; position: absolute; bottom: 2px; left: 16px; right: 16px;
+      height: 2px; background: var(--blue); border-radius: 1px;
+    }
+    .nav-links a:hover { color: var(--blue); }
+    .btn-primary {
+      background: var(--blue); color: white; padding: 10px 20px;
+      border: none; border-radius: 8px; font-size: 14px; font-weight: 600;
+      cursor: pointer; text-decoration: none; transition: background 0.2s;
+    }
+    .btn-primary:hover { background: var(--blue-light); }
+
+    /* ── THEME TOGGLE — lateral fixo (borda direita, meio da tela) ── */
+    .theme-fab {
+      position: fixed; top: 50%; right: 0; z-index: 300;
+      transform: translateY(-50%);
+    }
+    .theme-fab-btn {
+      width: 46px; height: 46px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-right: none;
+      border-radius: 12px 0 0 12px;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+      box-shadow: -4px 0 16px rgba(0,0,0,0.18);
+      transition: background 0.3s, border-color 0.3s, transform 0.2s, box-shadow 0.2s;
+      user-select: none;
+    }
+    .theme-fab-btn:hover {
+      transform: translateX(-5px);
+      box-shadow: -6px 0 20px rgba(0,0,0,0.25);
+    }
+
+    /* ── HERO ── */
+    #inicio {
+      min-height: 100vh; padding-top: 72px;
+      background: linear-gradient(135deg, #111827 0%, #1a2744 50%, #0a1628 100%);
+      display: flex; align-items: center; justify-content: center;
+      text-align: center; position: relative; overflow: hidden;
+    }
+    #inicio::before {
+      content: ''; position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(26,63,216,0.15) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(26,63,216,0.15) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
+    }
+    .circuit-svg { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.12; pointer-events: none; }
+    #inicio::after {
+      content: ''; position: absolute; bottom: -100px; right: -100px;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(26,63,216,0.4) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-content { position: relative; z-index: 1; max-width: 720px; padding: 0 24px; }
+    .hero-icon {
+      width: 64px; height: 64px; background: var(--blue); border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      color: white; font-weight: 800; font-size: 28px; margin: 0 auto 32px; position: relative;
+    }
+    .hero-icon::after {
+      content: ''; position: absolute; top: -6px; right: -6px;
+      width: 14px; height: 14px; background: var(--blue-light);
+      border-radius: 50%; border: 3px solid #111827;
+    }
+    .hero-title {
+      font-size: clamp(48px, 8vw, 80px); font-weight: 900; color: white;
+      letter-spacing: -1px; line-height: 1; margin-bottom: 20px;
+    }
+
+    /* Typing */
+    .hero-typing-wrap {
+      font-size: 22px; font-weight: 600; color: rgba(255,255,255,0.9);
+      margin-bottom: 16px; min-height: 34px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .hero-typing-prefix { color: rgba(255,255,255,0.55); margin-right: 8px; font-weight: 400; }
+    .typing-word {
+      color: #60A5FA; border-right: 2px solid #60A5FA;
+      padding-right: 3px; white-space: nowrap; overflow: hidden;
+      animation: blink-cursor 0.75s step-end infinite;
+    }
+    @keyframes blink-cursor { 50% { border-color: transparent; } }
+
+    .hero-desc {
+      font-size: 16px; color: rgba(255,255,255,0.6); line-height: 1.7;
+      margin-bottom: 40px; max-width: 520px; margin-left: auto; margin-right: auto;
+    }
+    .btn-hero {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--blue); color: white; padding: 16px 32px;
+      border-radius: 10px; font-size: 16px; font-weight: 600;
+      text-decoration: none; transition: all 0.2s; border: none; cursor: pointer;
+    }
+    .btn-hero:hover { background: var(--blue-light); transform: translateY(-2px); }
+    .btn-hero svg { transition: transform 0.2s; }
+    .btn-hero:hover svg { transform: translateX(4px); }
+
+    /* ── SERVICES ── */
+    #servicos { padding: 100px 48px; background: var(--light-bg); transition: background 0.3s; }
+    .section-header { text-align: center; margin-bottom: 60px; }
+    .section-title { font-size: 42px; font-weight: 800; color: var(--section-title-color); margin-bottom: 12px; transition: color 0.3s; }
+    .section-sub { font-size: 16px; color: var(--gray); }
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; max-width: 1200px; margin: 0 auto; }
+    .service-card {
+      background: var(--card-bg); border-radius: 12px; padding: 24px;
+      border: 1px solid var(--border); display: flex; align-items: center; gap: 16px;
+      transition: all 0.25s; cursor: default;
+    }
+    .service-card:hover { box-shadow: 0 8px 24px rgba(26,63,216,0.15); transform: translateY(-2px); }
+    .service-num {
+      min-width: 48px; height: 48px; background: var(--blue-bg); border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 800; color: var(--blue);
+    }
+    .service-name { font-size: 15px; font-weight: 600; color: var(--dark); line-height: 1.4; transition: color 0.3s; }
+
+    /* ── CONTACT ── */
+    #contato { padding: 100px 48px; background: var(--white); transition: background 0.3s; }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; max-width: 1100px; margin: 0 auto; }
+    .contact-info, .contact-form {
+      background: var(--card-bg); border: 1px solid var(--border);
+      border-radius: 16px; padding: 36px; transition: background 0.3s, border-color 0.3s;
+    }
+    .contact-info h3, .contact-form h3 { font-size: 22px; font-weight: 700; margin-bottom: 28px; color: var(--dark); transition: color 0.3s; }
+    .contact-item { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 24px; }
+    .contact-icon {
+      width: 44px; height: 44px; background: var(--blue-bg); border-radius: 10px;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background 0.3s;
+    }
+    .contact-item-text h4 { font-size: 15px; font-weight: 700; margin-bottom: 4px; color: var(--dark); transition: color 0.3s; }
+    .contact-item-text p { font-size: 14px; color: var(--gray); line-height: 1.6; }
+    .form-group { margin-bottom: 20px; }
+    .form-group label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 8px; color: var(--dark); transition: color 0.3s; }
+    .form-group input, .form-group textarea {
+      width: 100%; padding: 12px 16px; border: 1px solid var(--border);
+      border-radius: 8px; font-size: 14px; font-family: 'Inter', sans-serif;
+      color: var(--dark); background: var(--input-bg);
+      transition: border-color 0.2s, background 0.3s, color 0.3s; outline: none;
+    }
+    .form-group input::placeholder, .form-group textarea::placeholder { color: var(--gray); }
+    .form-group input:focus, .form-group textarea:focus { border-color: var(--blue); }
+    .form-group textarea { resize: vertical; min-height: 120px; }
+    .btn-submit {
+      width: 100%; padding: 14px; background: var(--blue); color: white;
+      border: none; border-radius: 8px; font-size: 15px; font-weight: 700;
+      cursor: pointer; transition: background 0.2s;
+    }
+    .btn-submit:hover { background: var(--blue-light); }
+
+    /* ── WHATSAPP — dois botões empilhados ── */
+    .whatsapp-stack {
+      position: fixed; bottom: 28px; right: 28px; z-index: 200;
+      display: flex; flex-direction: column; gap: 10px; align-items: flex-end;
+    }
+    .whatsapp-fab {
+      display: flex; align-items: center; gap: 10px;
+      background: #25D366; color: white;
+      padding: 12px 18px; border-radius: 50px;
+      text-decoration: none; font-size: 13px; font-weight: 700;
+      box-shadow: 0 4px 18px rgba(37,211,102,0.4);
+      transition: all 0.25s; white-space: nowrap; position: relative;
+    }
+    .whatsapp-fab:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 8px 28px rgba(37,211,102,0.5);
+      background: #1ebe5b;
+    }
+    .whatsapp-fab:first-child { animation: wapulse-ring 2.2s ease-out infinite; }
+    .whatsapp-fab:last-child  { animation: wapulse-ring 2.2s ease-out 0.4s infinite; }
+    @keyframes wapulse-ring {
+      0%   { box-shadow: 0 4px 18px rgba(37,211,102,0.4), 0 0 0 0 rgba(37,211,102,0.35); }
+      70%  { box-shadow: 0 4px 18px rgba(37,211,102,0.4), 0 0 0 12px rgba(37,211,102,0); }
+      100% { box-shadow: 0 4px 18px rgba(37,211,102,0.4), 0 0 0 0 rgba(37,211,102,0); }
+    }
+    .wap-label { display: flex; flex-direction: column; line-height: 1.2; }
+    .wap-name { font-size: 11px; opacity: 0.8; font-weight: 400; }
+    .wap-num  { font-size: 13px; font-weight: 700; }
+
+    /* ── FOOTER ── */
+    footer { background: var(--footer-bg); color: var(--footer-color); text-align: center; padding: 24px 48px; font-size: 13px; transition: background 0.3s; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 0 20px; }
+      #servicos, #contato { padding: 60px 20px; }
+      .services-grid { grid-template-columns: 1fr 1fr; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .section-title { font-size: 32px; }
+    }
+    @media (max-width: 600px) {
+      .services-grid { grid-template-columns: 1fr; }
+      .nav-links a:not(.btn-primary) { display: none; }
+      .wap-name { display: none; }
+      .whatsapp-fab { padding: 13px 15px; }
+    }
+
+    /* Fade up */
+    .fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.5s ease, transform 0.5s ease; }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <a href="#inicio" class="nav-logo">
+    <div class="logo-icon">E</div>
+    <div class="logo-text">
+      <span class="logo-title">EFTS TECHNOLOGY</span>
+      <span class="logo-sub">Soluções Tecnológicas</span>
+    </div>
+  </a>
+  <div class="nav-links">
+    <a href="#servicos" id="nav-servicos">Serviços</a>
+    <a href="#contato" id="nav-contato">Contato</a>
+    <a href="#contato" class="btn-primary">Solicitar Orçamento</a>
+  </div>
+</nav>
+
+<!-- TOGGLE NOITE/DIA — lateral direita, meio da tela -->
+<div class="theme-fab">
+  <button class="theme-fab-btn" id="theme-toggle" title="Alternar tema claro/escuro">
+    <span id="theme-icon">🌙</span>
+  </button>
+</div>
+
+<!-- HERO -->
+<section id="inicio">
+  <svg class="circuit-svg" viewBox="0 0 1400 800" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+    <line x1="0" y1="150" x2="400" y2="150" stroke="#3B5BF5" stroke-width="1.5"/>
+    <line x1="450" y1="150" x2="700" y2="150" stroke="#3B5BF5" stroke-width="1.5"/>
+    <line x1="0" y1="300" x2="200" y2="300" stroke="#3B5BF5" stroke-width="1.5"/>
+    <line x1="1000" y1="250" x2="1400" y2="250" stroke="#3B5BF5" stroke-width="1.5"/>
+    <line x1="900" y1="400" x2="1400" y2="400" stroke="#3B5BF5" stroke-width="1.5"/>
+    <line x1="1100" y1="600" x2="1400" y2="600" stroke="#3B5BF5" stroke-width="1.5"/>
+    <line x1="200" y1="0" x2="200" y2="350" stroke="#3B5BF5" stroke-width="1.5"/>
+    <line x1="400" y1="100" x2="400" y2="200" stroke="#3B5BF5" stroke-width="1.5"/>
+    <line x1="1200" y1="200" x2="1200" y2="700" stroke="#3B5BF5" stroke-width="1.5"/>
+    <line x1="1000" y1="200" x2="1000" y2="450" stroke="#3B5BF5" stroke-width="1.5"/>
+    <circle cx="200" cy="150" r="5" fill="#3B5BF5"/>
+    <circle cx="400" cy="150" r="5" fill="#3B5BF5"/>
+    <circle cx="1000" cy="250" r="5" fill="#3B5BF5"/>
+    <circle cx="1200" cy="250" r="5" fill="#3B5BF5"/>
+    <circle cx="1200" cy="400" r="5" fill="#3B5BF5"/>
+    <circle cx="1000" cy="400" r="5" fill="#3B5BF5"/>
+    <circle cx="1200" cy="600" r="5" fill="#3B5BF5"/>
+    <rect x="50" y="200" width="120" height="80" rx="4" stroke="#3B5BF5" stroke-width="1.5" fill="none"/>
+    <line x1="70" y1="200" x2="70" y2="185" stroke="#3B5BF5" stroke-width="1.5"/>
+    <line x1="90" y1="200" x2="90" y2="185" stroke="#3B5BF5" stroke-width="1.5"/>
+    <line x1="110" y1="200" x2="110" y2="185" stroke="#3B5BF5" stroke-width="1.5"/>
+    <line x1="70" y1="280" x2="70" y2="295" stroke="#3B5BF5" stroke-width="1.5"/>
+    <line x1="90" y1="280" x2="90" y2="295" stroke="#3B5BF5" stroke-width="1.5"/>
+    <line x1="110" y1="280" x2="110" y2="295" stroke="#3B5BF5" stroke-width="1.5"/>
+    <rect x="1150" y="480" width="140" height="90" rx="4" stroke="#3B5BF5" stroke-width="1.5" fill="none"/>
+    <line x1="1170" y1="480" x2="1170" y2="465" stroke="#3B5BF5" stroke-width="1.5"/>
+    <line x1="1195" y1="480" x2="1195" y2="465" stroke="#3B5BF5" stroke-width="1.5"/>
+    <line x1="1220" y1="480" x2="1220" y2="465" stroke="#3B5BF5" stroke-width="1.5"/>
+    <line x1="1170" y1="570" x2="1170" y2="585" stroke="#3B5BF5" stroke-width="1.5"/>
+    <line x1="1195" y1="570" x2="1195" y2="585" stroke="#3B5BF5" stroke-width="1.5"/>
+    <line x1="1220" y1="570" x2="1220" y2="585" stroke="#3B5BF5" stroke-width="1.5"/>
+    <path d="M 320 100 L 400 100 L 400 150" stroke="#3B5BF5" stroke-width="1.5" fill="none"/>
+    <path d="M 1000 450 L 1000 500 L 1100 600" stroke="#3B5BF5" stroke-width="1.5" fill="none"/>
+    <rect x="620" y="145" width="30" height="10" rx="2" stroke="#3B5BF5" stroke-width="1.5" fill="none"/>
+    <line x1="605" y1="150" x2="620" y2="150" stroke="#3B5BF5" stroke-width="1.5"/>
+    <line x1="650" y1="150" x2="665" y2="150" stroke="#3B5BF5" stroke-width="1.5"/>
+  </svg>
+
+  <div class="hero-content">
+    <div class="hero-icon">E</div>
+    <h1 class="hero-title">EFTS TECHNOLOGY</h1>
+    <div class="hero-typing-wrap">
+      <span class="hero-typing-prefix">Especialistas em</span>
+      <span class="typing-word" id="typing-word"></span>
+    </div>
+    <p class="hero-desc">
+      Oferecemos serviços especializados em manutenção, instalação e
+      consultoria tecnológica para empresas e pessoas físicas.
+    </p>
+    <a href="#contato" class="btn-hero">
+      Solicitar Orçamento
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+        <path d="M5 12h14M12 5l7 7-7 7"/>
+      </svg>
+    </a>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="servicos">
+  <div class="section-header fade-up">
+    <h2 class="section-title">Nossos Serviços</h2>
+    <p class="section-sub">Soluções completas em tecnologia para atender todas as suas necessidades</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card fade-up"><div class="service-num">01</div><div class="service-name">Manutenção<br/>Corretiva e Preventiva</div></div>
+    <div class="service-card fade-up"><div class="service-num">02</div><div class="service-name">Formatação em Geral</div></div>
+    <div class="service-card fade-up"><div class="service-num">03</div><div class="service-name">Instalação de Softwares</div></div>
+    <div class="service-card fade-up"><div class="service-num">04</div><div class="service-name">Montagem de Equipamentos</div></div>
+    <div class="service-card fade-up"><div class="service-num">05</div><div class="service-name">Troca de Componentes</div></div>
+    <div class="service-card fade-up"><div class="service-num">06</div><div class="service-name">Instalação e Configuração<br/>de Impressoras</div></div>
+    <div class="service-card fade-up"><div class="service-num">07</div><div class="service-name">Backups</div></div>
+    <div class="service-card fade-up"><div class="service-num">08</div><div class="service-name">Consultoria de ERP (CISSPoder)</div></div>
+    <div class="service-card fade-up"><div class="service-num">09</div><div class="service-name">Redes em Geral</div></div>
+    <div class="service-card fade-up"><div class="service-num">10</div><div class="service-name">Criação de Landing Pages</div></div>
+    <div class="service-card fade-up"><div class="service-num">11</div><div class="service-name">Automatização RPA<br/>de Rotina</div></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contato">
+  <div class="section-header fade-up">
+    <h2 class="section-title">Entre em Contato</h2>
+    <p class="section-sub">Estamos prontos para atender você e sua empresa</p>
+  </div>
+  <div class="contact-grid">
+    <div class="contact-info fade-up">
+      <h3>Informações de Contato</h3>
+      <div class="contact-item">
+        <div class="contact-icon">
+          <svg width="20" height="20" fill="none" stroke="#1A3FD8" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.95 13a19.79 19.79 0 01-3.07-8.67A2 2 0 012.88 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L7.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
+          </svg>
+        </div>
+        <div class="contact-item-text">
+          <h4>Telefones</h4>
+          <p>(79) 99611-7901<br/>(79) 99821-8241</p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">
+          <svg width="20" height="20" fill="none" stroke="#1A3FD8" stroke-width="2" viewBox="0 0 24 24">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+            <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/>
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+          </svg>
+        </div>
+        <div class="contact-item-text">
+          <h4>Instagram</h4>
+          <p>@emanufilipe23<br/>@tsantos99_</p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">
+          <svg width="20" height="20" fill="none" stroke="#1A3FD8" stroke-width="2" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+        </div>
+        <div class="contact-item-text">
+          <h4>Atendimento</h4>
+          <p>Agende seu horário que iremos te atender</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-form fade-up">
+      <h3>Envie sua Mensagem</h3>
+      <div class="form-group">
+        <label>Nome</label>
+        <input type="text" placeholder="Seu nome completo"/>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" placeholder="seu@email.com"/>
+      </div>
+      <div class="form-group">
+        <label>Mensagem</label>
+        <textarea placeholder="Descreva sua necessidade ou dúvida..."></textarea>
+      </div>
+      <button class="btn-submit">Enviar Mensagem</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2024 EFTS Technology. Todos os direitos reservados.</p>
+</footer>
+
+<!-- WHATSAPP — dois botões empilhados -->
+<div class="whatsapp-stack">
+  <a class="whatsapp-fab" href="https://wa.me/5579996117901" target="_blank" rel="noopener">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="white" flex-shrink="0">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+    <div class="wap-label">
+      <span class="wap-name">Emanuel</span>
+      <span class="wap-num">(79) 99611-7901</span>
+    </div>
+  </a>
+  <a class="whatsapp-fab" href="https://wa.me/5579998218241" target="_blank" rel="noopener">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="white" flex-shrink="0">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+    <div class="wap-label">
+      <span class="wap-name">Talisson</span>
+      <span class="wap-num">(79) 99821-8241</span>
+    </div>
+  </a>
+</div>
+
+<script>
+  /* ── DARK MODE ── */
+  const html = document.documentElement;
+  const toggleBtn = document.getElementById('theme-toggle');
+  const icon = document.getElementById('theme-icon');
+  const saved = localStorage.getItem('theme') || 'dark';
+  html.setAttribute('data-theme', saved);
+  icon.textContent = saved === 'dark' ? '☀️' : '🌙';
+
+  toggleBtn.addEventListener('click', () => {
+    const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    icon.textContent = next === 'dark' ? '☀️' : '🌙';
+  });
+
+  /* ── TYPING ANIMATION ── */
+  const words = ['Manutenção', 'Formatação', 'Redes', 'Softwares', 'Backups', 'Impressoras', 'ERP', 'Landing Pages', 'Automação RPA'];
+  const el = document.getElementById('typing-word');
+  let wi = 0, ci = 0, deleting = false;
+  const SPEED_TYPE = 80, SPEED_DEL = 45, PAUSE = 1800;
+  function type() {
+    const word = words[wi];
+    if (!deleting) {
+      el.textContent = word.slice(0, ++ci);
+      if (ci === word.length) { deleting = true; setTimeout(type, PAUSE); return; }
+    } else {
+      el.textContent = word.slice(0, --ci);
+      if (ci === 0) { deleting = false; wi = (wi + 1) % words.length; }
+    }
+    setTimeout(type, deleting ? SPEED_DEL : SPEED_TYPE);
+  }
+  type();
+
+  /* ── ACTIVE NAV ── */
+  const sections = ['inicio', 'servicos', 'contato'];
+  const navLinks = { servicos: document.getElementById('nav-servicos'), contato: document.getElementById('nav-contato') };
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY + 100;
+    sections.forEach(id => {
+      const sec = document.getElementById(id);
+      if (!sec) return;
+      if (y >= sec.offsetTop && y < sec.offsetTop + sec.offsetHeight) {
+        Object.values(navLinks).forEach(l => l && l.classList.remove('active'));
+        if (navLinks[id]) navLinks[id].classList.add('active');
+      }
+    });
+  });
+
+  /* ── FADE UP ── */
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach((el, i) => {
+    el.style.transitionDelay = (i % 3) * 0.08 + 's';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
