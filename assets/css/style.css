@@ -263,6 +263,53 @@ section.block { padding: 110px 40px; position: relative; transition: background 
 .section-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(30px,4.5vw,46px); font-weight: 700; color: var(--section-title-color); letter-spacing: -.8px; margin-bottom: 12px; transition: color .45s var(--ease); }
 .section-sub { font-size: 16px; color: var(--gray); max-width: 520px; margin: 0 auto; line-height: 1.6; }
 
+/* ── SOBRE NÓS ── */
+#sobre { background: var(--white); }
+
+/* Dois cards lado a lado */
+.sobre-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 1080px; margin: 0 auto; }
+
+.sobre-card {
+  background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px;
+  padding: 38px; display: flex; flex-direction: column; align-items: center; text-align: center;
+  box-shadow: var(--card-shadow); transition: border-color .3s var(--ease), box-shadow .3s var(--ease);
+  position: relative; overflow: hidden;
+}
+/* Brilho sutil no topo do card ao hover */
+.sobre-card::before {
+  content: ''; position: absolute; inset: 0; opacity: 0; transition: opacity .3s;
+  background: radial-gradient(500px circle at 50% -10%, rgba(42,85,240,0.09), transparent 60%);
+}
+.sobre-card:hover::before { opacity: 1; }
+.sobre-card:hover { border-color: rgba(42,85,240,.3); box-shadow: 0 20px 44px -22px rgba(42,85,240,.4); }
+
+/* Avatar com iniciais — substituir por <img> quando tiver foto */
+.sobre-avatar {
+  width: 88px; height: 88px; border-radius: 50%; background: var(--blue-bg);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Space Grotesk', sans-serif; font-size: 28px; font-weight: 700; color: var(--blue);
+  margin-bottom: 20px; border: 3px solid var(--border);
+  transition: border-color .3s, transform .3s var(--ease);
+}
+.sobre-card:hover .sobre-avatar { border-color: var(--blue); transform: scale(1.04); }
+
+.sobre-name { font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 700; color: var(--dark); margin-bottom: 4px; transition: color .45s; }
+.sobre-role { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--blue); letter-spacing: 1.2px; text-transform: uppercase; margin-bottom: 10px; }
+.sobre-location { font-size: 13px; color: var(--gray); margin-bottom: 18px; display: flex; align-items: center; justify-content: center; gap: 5px; }
+.sobre-bio { font-size: 14px; color: var(--gray); line-height: 1.75; margin-bottom: 22px; }
+
+/* Tags de habilidades */
+.sobre-tags { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+.sobre-tag {
+  font-family: 'JetBrains Mono', monospace; font-size: 11px; padding: 4px 12px;
+  background: var(--blue-bg); color: var(--blue); border-radius: 50px; border: 1px solid var(--border);
+  transition: background .2s, color .2s;
+}
+.sobre-tag:hover { background: var(--blue); color: #fff; }
+
+/* Sobre responsivo */
+@media (max-width: 700px) { .sobre-grid { grid-template-columns: 1fr; } }
+
 /* ── GRADE DE SERVIÇOS ── */
 /* 3 colunas no desktop; perspective ativa o contexto 3D para o tilt dos cards */
 .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; max-width: 1160px; margin: 0 auto; perspective: 1200px; }
@@ -388,6 +435,32 @@ footer { background: var(--footer-bg); color: var(--footer-color); padding: 40px
   .wap-name { display: none; }
   .whatsapp-fab { padding: 12px 14px; }
   .footer-inner { flex-direction: column; text-align: center; }
+}
+
+/* ── BANNER LGPD ── */
+.lgpd-banner {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 500;
+  background: var(--card-bg); border-top: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between; gap: 20px;
+  padding: 16px 40px; box-shadow: 0 -8px 30px -10px rgba(0,0,0,0.3);
+  transition: transform .4s var(--ease), opacity .4s var(--ease), background .45s, border-color .45s;
+}
+/* Oculta com animação ao aceitar */
+.lgpd-banner.hidden { transform: translateY(100%); opacity: 0; pointer-events: none; }
+
+.lgpd-text { font-size: 13px; color: var(--gray); line-height: 1.6; max-width: 860px; }
+.lgpd-text strong { color: var(--dark); font-weight: 600; }
+
+.lgpd-btn {
+  flex-shrink: 0; padding: 9px 22px; background: var(--blue); color: #fff;
+  border: none; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer;
+  transition: background .2s, transform .15s var(--ease);
+}
+.lgpd-btn:hover { background: var(--blue-light); transform: translateY(-1px); }
+
+@media (max-width: 600px) {
+  .lgpd-banner { flex-direction: column; align-items: flex-start; padding: 16px 20px; }
+  .lgpd-btn { width: 100%; text-align: center; }
 }
 
 /* ── ANIMAÇÃO DE ENTRADA (Intersection Observer) ── */

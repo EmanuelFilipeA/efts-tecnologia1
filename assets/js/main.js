@@ -141,10 +141,11 @@ document.querySelectorAll('.service-card').forEach(card => {
    Detecta qual seção está visível e marca o link correspondente
    na navbar com a classe .active. */
 const navLinks = {
+  sobre:    document.getElementById('nav-sobre'),
   servicos: document.getElementById('nav-servicos'),
   contato:  document.getElementById('nav-contato'),
 };
-const secIds = ['servicos','contato'];
+const secIds = ['sobre','servicos','contato'];
 
 window.addEventListener('scroll', () => {
   const y = window.scrollY + 120; // offset para ativar um pouco antes do topo da seção
@@ -173,6 +174,20 @@ const obs = new IntersectionObserver(entries => {
 document.querySelectorAll('.reveal').forEach((node, i) => {
   if (node.classList.contains('service-card')) node.style.transitionDelay = (i % 3) * 0.07 + 's';
   obs.observe(node);
+});
+
+/* ── BANNER LGPD ──
+   Exibe o banner apenas se o usuário ainda não aceitou.
+   Ao clicar em "Entendi", salva no localStorage e oculta com animação. */
+const lgpdBanner = document.getElementById('lgpdBanner');
+const lgpdAccept = document.getElementById('lgpdAccept');
+
+if (localStorage.getItem('lgpd') === 'accepted') {
+  lgpdBanner.classList.add('hidden');
+}
+lgpdAccept.addEventListener('click', () => {
+  localStorage.setItem('lgpd', 'accepted');
+  lgpdBanner.classList.add('hidden');
 });
 
 /* ── ENVIO REAL DO FORMULÁRIO VIA FORMSPREE ──
