@@ -2,60 +2,62 @@
 
 Site oficial da **EFTS Technology**, empresa de soluções tecnológicas baseada em Sergipe.
 
-## ✨ Funcionalidades
+## Funcionalidades
 
 - Design responsivo (desktop, tablet e mobile)
 - Modo escuro / claro com toggle lateral
-- Animação de digitação no hero
+- Barra de progresso de leitura no topo
+- Efeito de digitação animado no hero
+- Parallax com movimento do mouse no hero
+- Cards de serviço com tilt 3D e spotlight
 - Botões flutuantes do WhatsApp (Emanuel e Talisson)
+- Formulário de contato integrado ao **Formspree** (envio real de email)
 - Animações de entrada ao rolar a página
-- Seção de serviços com 11 cards
-- Formulário de contato
+- Botão voltar ao topo
 
-## 🛠 Tecnologias
+## Tecnologias
 
-- HTML5 semântico
+- HTML5
 - CSS3 (variáveis, animações, grid, responsivo)
 - JavaScript puro (sem frameworks)
-- Google Fonts — Inter
+- Google Fonts — Inter, Space Grotesk, JetBrains Mono
+- [Formspree](https://formspree.io) — envio do formulário de contato
 
-## 📁 Estrutura
+## Estrutura
 
 ```
-efts-technology-website/
+efts-tecnologia1/
 │
-├── index.html              # Página principal
+├── index.html
 │
 ├── assets/
 │   ├── css/
-│   │   └── style.css       # Todos os estilos
+│   │   └── style.css
 │   ├── js/
-│   │   └── main.js         # Scripts (tema, typing, scroll)
-│   └── img/                # Imagens e logo
+│   │   └── main.js
+│   └── img/
 │
 ├── social/
 │   └── instagram/
-│       ├── post.html       # Arte post 1:1
-│       └── story.html      # Arte story 9:16
 │
 └── README.md
 ```
 
-## 🚀 Como usar
+## Como usar
 
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/seu-usuario/efts-technology-website.git
+   git clone https://github.com/EmanuelFilipeA/efts-tecnologia1.git
    ```
-2. Abra o arquivo `index.html` no navegador — sem necessidade de servidor.
+2. Abra o `index.html` no navegador — sem necessidade de servidor.
 
-## 📞 Contato
+## Contato
 
 | | |
 |---|---|
-| 📱 Emanuel | (79) 99611-7901 |
-| 📱 Talisson | (79) 99821-8241 |
-| 📸 Instagram | @emanufilipe23 · @tsantos99_ |
+| Emanuel | (79) 99611-7901 |
+| Talisson | (79) 99821-8241 |
+| Instagram | @emanufilipe23 · @tsantos99_ |
 
 ---
 
